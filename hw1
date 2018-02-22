@@ -1,0 +1,90 @@
+#Welcome to BinaryCount
+#Gabrielle Beaulieu %
+#CSCI 0202 A
+#2/19/18 -- HW1
+#Additional functionality: alignment choice, adjustable spacing
+
+"""
+Program prints list of binary and corresponding decimal numbers 
+Parameters: limit- the highest desired decimal number in the list
+            alignment - the alignment of the list (LEFT or RIGHT)
+"""
+
+#CONSTANTS
+spc = 15 #spacing constant between columns
+spcRIGHT = 10 #right alignment spacing constant
+spcLEFT = 0 #left alignment spacing constant
+spcADJ = 6 #title adjustment constant
+rightAlignment = False #default left alignment
+
+import sys
+
+def printBinary(limit):
+    """
+    Prints decimal numbers and their binary counterparts
+    Parameters: an int limit (i.e. the highest number desired in list)
+    """
+    print((a(0)-spcADJ)*" " + "decimal" + " "*spacer("decimal", "binary") + "binary")
+    for i in range(limit + 1):
+        binNum = makeBinary(i)
+        print(a(i)*" " + str(i) + " "*spacer(str(i), str(binNum)) + binNum)
+    print()
+    return
+
+
+def makeBinary(num):
+    """
+    Returns the binary representation of an imput decimal number
+    Parameters: a decimal number
+    """
+    if num == 0:
+        return "0"
+    binaryNum = ""
+    while num > 0:
+        remainder = num % 2
+        binaryNum = str(remainder) + binaryNum
+        num = num // 2
+    return binaryNum
+
+
+def spacer(r, b):
+    """
+    Determines appropriate amount of spacing based on number length
+    Takes alignment into account
+    Parameters: r - a number
+                b - binary version of that number
+    """      
+    if rightAlignment == True:
+        return spc - len(b)
+    else:
+        return spc - len(str(r))
+    
+def a(i):
+    """
+    Returns an int of necessary spaces for alignment
+    Parameters: i - an int number
+    """    
+    if rightAlignment == True:
+        return spcRIGHT - len(str(i))
+    if rightAlignment == False:
+        return spcLEFT 
+
+    
+if __name__ == "__main__":
+    """
+    Wrong number of parameters will lead to usage message    
+    Program will default to left alignment with invalid alignment input
+    """
+    if len(sys.argv) != 3:
+        print("\n" + "usage: python3 BinaryCount <limit> <alignment>" + 
+        "\n" + "Limit should be an integer." +
+        "\n" + "For alignment, type RIGHT or LEFT." + "\n")
+    else:
+        if sys.argv[2] == "RIGHT":
+            rightAlignment = True
+        if sys.argv[2] == "LEFT":
+            rightAlignment = False
+        printBinary(int(sys.argv[1]))
+
+
+        
